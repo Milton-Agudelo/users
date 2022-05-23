@@ -41,14 +41,4 @@ public class UserController {
 	public User createUser(@RequestBody UserDto userDto) {
 		return iUserService.createUser(new User(userDto));
 	}
-
-	@PutMapping("/update/")
-	public String updateUser(@RequestBody UserDto userDto) {
-		return iUserService.updateUser(new User(userDto.getId(),userDto.getName(),userDto.getEmail()));
-	}
-
-	@DeleteMapping("/delete/{id}")
-	public String deleteUser(@PathVariable String id) {
-		return iUserService.deleteUser(id);
-	}
 }
