@@ -1,2 +1,2 @@
 # users
-Project for first sprint revieew
+Project for first sprint review
