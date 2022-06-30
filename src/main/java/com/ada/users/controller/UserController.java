@@ -1,54 +1,68 @@
 package com.ada.users.controller;
 
 import com.ada.users.controller.dto.UserDto;
-import com.ada.users.model.User;
+import com.ada.users.entity.UserDocument;
 import com.ada.users.service.IUserService;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/v3/users/")
 public class UserController {
 	/*@Autowired
     private IUserService iUserService;*/
 
-	private final IUserService iUserService;
+    private final IUserService iUserService;
 
-	public UserController(@Autowired IUserService iUserService) {
-		this.iUserService = iUserService;
-	}
+    public UserController(@Autowired IUserService iUserService) {
+        this.iUserService = iUserService;
+    }
 
-	@GetMapping("/list")
-	public List<User> findAll(){
-		return iUserService.findAll();
-	}
 
-	@GetMapping(path = "/find/{id}")
-	public Optional<User> findById(@PathVariable("id") String id){
-		return iUserService.findById(id);
-	}
+    @GetMapping
+    public ResponseEntity<List<UserDocument>> findAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(iUserService.findAll());
+    }
 
-	@PostMapping("/save/")
-	public User createUser(@RequestBody UserDto userDto) {
-		return iUserService.createUser(new User(userDto));
-	}
+    @PostMapping
+    private ResponseEntity<UserDocument> save(@RequestBody UserDto userDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(iUserService.save(new UserDocument(userDto)));
+    }
 
-	@PutMapping("/update/")
-	public String updateUser(@RequestBody UserDto userDto) {
-		return iUserService.updateUser(new User(userDto.getId(),userDto.getName(),userDto.getEmail()));
-	}
+    @GetMapping("{id}")
+    public ResponseEntity<UserDocument> findById(@PathVariable String id) {
+        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
+        try {
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body(iUserService.findById(id));
+     /*   } catch (Exception e) {
+            throw new Exception(e.getMessage()); // */
+        }  finally {
+            return responseEntity;
+        }
+    }
 
-	@DeleteMapping("/delete/{id}")
-	public String deleteUser(@PathVariable String id) {
-		return iUserService.deleteUser(id);
-	}
+    @PutMapping("{id}")
+    public ResponseEntity<UserDocument> update(@PathVariable String id, @RequestBody UserDto userDto) {
+        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
+        UserDocument userDocument = new UserDocument(userDto);
+        if (iUserService.update(id, userDocument)) {
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body(iUserService.findById(id));
+        }
+
+        return responseEntity;
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
+        if (iUserService.deleteById(id)) {
+            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return responseEntity;
+    }
+
 }

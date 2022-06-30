@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "23a0c087-49ea-4f6f-9972-db68afb6a77e",
+		"name": "Spring Learning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Crear user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"William\",\r\n    \"lastName\": \"Echeverry\",\r\n    \"age\": 29,\r\n    \"email\": \"ada6@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/v3/users/",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/v3/users/62bb6fd8f61b105869ad24a7",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"62bb6fd8f61b105869ad24a7"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "\"21915787-3780-40b5-826d-7ca613ad5681\"",
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "\"1f3451fb-e5a1-4c30-96a2-f6fbbb9b0446\"",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"db564673-3c01-4c8b-8c19-b344a7923f28\",\r\n    \"name\": \"Milton\",\r\n    \"lastName\": \"Agudelo\",\r\n    \"age\": 45,\r\n    \"email\": \"ada5@gmail.com\",\r\n    \"createdAt\": \"2022-06-28T21:52:00.092+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/db564673-3c01-4c8b-8c19-b344a7923f28",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"db564673-3c01-4c8b-8c19-b344a7923f28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"date\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/62bb6fd8f61b105869ad24a7",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"62bb6fd8f61b105869ad24a7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:8080"
+		}
+	]
+}
