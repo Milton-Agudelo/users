@@ -1,19 +1,20 @@
 package com.ada.users.controller.dto;
 
-import com.ada.users.entity.User;
+import com.ada.users.entity.UserDocument;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @AllArgsConstructor
 public class UserDto {
 
     private String name;
+    private String lastName;
     private int age;
     private String email;
 
-    public UserDto(User user) {
-        this(user.getName(), user.getAge(), user.getEmail());
+    public UserDto(UserDocument userDocument) {
+        this(userDocument.getName(), userDocument.getLastName(), userDocument.getAge(), userDocument.getEmail());
     }
 
 }

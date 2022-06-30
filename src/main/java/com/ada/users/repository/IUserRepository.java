@@ -1,8 +1,8 @@
 package com.ada.users.repository;
 
-import com.ada.users.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.ada.users.entity.UserDocument;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface IUserRepository extends JpaRepository<User, Long> {
+public interface IUserRepository extends MongoRepository<UserDocument, String> {
 
 }

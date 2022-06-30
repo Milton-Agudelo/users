@@ -1,16 +1,18 @@
 package com.ada.users.service;
 
-import com.ada.users.entity.User;
+import com.ada.users.entity.UserDocument;
+
+import java.util.List;
 
 public interface IUserService {
 
-    User save(User user);
+    UserDocument save(UserDocument userDocument);
 
-    Iterable<User> findAll();
+    List<UserDocument> findAll();
 
-    User findById(Long id);
+    UserDocument findById(String id);
 
-    boolean update(Long id, User user);
+    boolean update(String id, UserDocument userDocument);
 
-    boolean delete(Long id);
+    boolean deleteById(String id);
 }
