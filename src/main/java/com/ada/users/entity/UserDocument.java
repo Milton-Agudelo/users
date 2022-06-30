@@ -18,16 +18,13 @@ import java.util.UUID;
 public class UserDocument  {
 
     @Id
-    String id;
-
-    String name;
-    String lastName;
-
-    int age;
-
+    private String id;
+    private String name;
+    private String lastName;
+    private int age;
     @Indexed( unique = true )
-    String email;
-    Date createdAt;
+    private String email;
+    private Date createdAt;
 
     public UserDocument(UserDto userDto) {
         this(UUID.randomUUID().toString(), userDto.getName(), userDto.getLastName(), userDto.getAge(), userDto.getEmail(), new Date());
