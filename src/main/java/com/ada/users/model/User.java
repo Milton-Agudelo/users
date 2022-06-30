@@ -1,6 +1,6 @@
 package com.ada.users.model;
 
-import com.ada.users.controller.dto.UserDto;
+import com.ada.users.controller.user.UserDto;
 import java.util.UUID;
 
 public class User {

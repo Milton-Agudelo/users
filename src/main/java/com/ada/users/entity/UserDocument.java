@@ -6,13 +6,14 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.ada.users.controller.dto.UserDto;
+import com.ada.users.controller.user.UserDto;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
-@Document
+@Document(value="user")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDocument  {
@@ -24,10 +25,13 @@ public class UserDocument  {
     private int age;
     @Indexed( unique = true )
     private String email;
+    private String passwordHash;
+    private List<RoleEnum> roles;
     private Date createdAt;
 
     public UserDocument(UserDto userDto) {
-        this(UUID.randomUUID().toString(), userDto.getName(), userDto.getLastName(), userDto.getAge(), userDto.getEmail(), new Date());
+        this(UUID.randomUUID().toString(), userDto.getName(), userDto.getLastName(), userDto.getAge(),
+                userDto.getEmail(), userDto.getPasswordHash(), userDto.getRoles(), new Date());
     }
 
 }

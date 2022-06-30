@@ -1,6 +1,5 @@
-package com.ada.users.controller;
+package com.ada.users.controller.user;
 
-import com.ada.users.controller.dto.UserDto;
 import com.ada.users.entity.UserDocument;
 import com.ada.users.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ public class UserController {
         this.iUserService = iUserService;
     }
 
-
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
         List userDtoList = new ArrayList();
@@ -40,7 +38,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body((new UserDto(iUserService.save(new UserDocument(userDto)))));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/findById/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable String id) {
         ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
         try {
@@ -50,6 +48,11 @@ public class UserController {
         }  finally {
             return responseEntity;
         }
+    }
+
+    @GetMapping("/findByEmail/{email}")
+    public ResponseEntity<UserDto> findByEmail(@PathVariable String email){
+        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.findByEmail(email)));
     }
 
     @PutMapping("{id}")

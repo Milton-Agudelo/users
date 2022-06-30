@@ -1,5 +1,6 @@
 package com.ada.users.service;
 
+import com.ada.users.exception.UserNotFoundException;
 import com.ada.users.repository.IUserRepository;
 import com.ada.users.entity.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,20 @@ public class UserServiceMongoDb implements IUserService {
     public UserDocument findById(String id) {
         return iUserRepository.findById(id).get();
     }
+
+    @Override
+    public UserDocument findByEmail(String email) throws UserNotFoundException {
+
+            if(!email.equals("")){
+                Optional<UserDocument> userDocument = iUserRepository.findFirstByEmail(email);
+                if (userDocument.isPresent()){
+                    return userDocument.get();
+                } else {
+                    throw new UserNotFoundException();
+                }
+            }
+            throw new UserNotFoundException();
+        }
 
     @Override
     public List<UserDocument> findAll() {
