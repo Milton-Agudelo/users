@@ -4,17 +4,21 @@ import com.ada.users.entity.UserDocument;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
 @AllArgsConstructor
 public class UserDto {
 
+    private String id;
     private String name;
     private String lastName;
     private int age;
     private String email;
+    private Date date;
 
     public UserDto(UserDocument userDocument) {
-        this(userDocument.getName(), userDocument.getLastName(), userDocument.getAge(), userDocument.getEmail());
+        this(userDocument.getId(), userDocument.getName(), userDocument.getLastName(), userDocument.getAge(), userDocument.getEmail(), userDocument.getCreatedAt());
     }
 
 }
