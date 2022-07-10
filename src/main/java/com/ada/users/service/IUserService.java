@@ -12,7 +12,12 @@ public interface IUserService {
 
     UserDocument findById(String id);
 
-    boolean update(String id, UserDocument userDocument);
+    UserDocument findByEmail(String email);
+    UserDocument updateById(String id, UserDocument userDocument);
 
-    boolean deleteById(String id);
+    UserDocument updateByEmail(String email, UserDocument userDocument);
+
+    void deleteById(String id);
+
+    void deleteByEmail(String email);
 }

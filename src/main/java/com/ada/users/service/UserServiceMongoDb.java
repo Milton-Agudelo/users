@@ -1,5 +1,7 @@
 package com.ada.users.service;
 
+import com.ada.users.exception.RegisteredEmailException;
+import com.ada.users.exception.UserNotFoundException;
 import com.ada.users.repository.IUserRepository;
 import com.ada.users.entity.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,38 @@ public class UserServiceMongoDb implements IUserService {
     }
 
     @Override
-    public UserDocument save(UserDocument userDocument) {
-        return iUserRepository.save(userDocument);
+    public UserDocument save(UserDocument userDocument) throws RegisteredEmailException{
+        if (!iUserRepository.findFirstByEmail(userDocument.getEmail()).isPresent()) {
+            return iUserRepository.save(userDocument);
+        }
+
+        throw new RegisteredEmailException();
+
     }
 
     @Override
-    public UserDocument findById(String id) {
-        return iUserRepository.findById(id).get();
+    public UserDocument findById(String id) throws UserNotFoundException{
+
+        Optional<UserDocument> documentFound = iUserRepository.findById(id);
+
+        if (documentFound.isPresent()) {
+            return documentFound.get();
+        }
+
+        throw new UserNotFoundException();
+
+    }
+
+    @Override
+    public UserDocument findByEmail(String email) throws UserNotFoundException {
+
+        Optional<UserDocument> documentFound = iUserRepository.findFirstByEmail(email);
+
+        if (documentFound.isPresent()) {
+            return documentFound.get();
+        }
+
+        throw new UserNotFoundException();
     }
 
     @Override
@@ -33,25 +60,58 @@ public class UserServiceMongoDb implements IUserService {
     }
 
     @Override
-    public boolean deleteById(String id) {
-        boolean result = false;
-        Optional<UserDocument> user = iUserRepository.findById(id);
-        if (!user.equals(Optional.empty())) {
+    public void deleteById(String id) throws UserNotFoundException {
+
+        Optional<UserDocument> documentFound = iUserRepository.findById(id);
+
+        if (documentFound.isPresent()) {
             iUserRepository.deleteById(id);
-            result = true;
+
         }
-        return result;
+
+        throw new UserNotFoundException();
+
     }
 
-    public boolean update(String id, UserDocument userDocument) {
-        boolean result = false;
-        Optional<UserDocument> userToUpdate = iUserRepository.findById(id);
-        if (!userToUpdate.equals(Optional.empty())) {
+    @Override
+    public void deleteByEmail(String email) throws UserNotFoundException {
+
+        Optional<UserDocument> userToDelete = iUserRepository.findFirstByEmail(email);
+
+        if (userToDelete.isPresent()) {
+            iUserRepository.deleteById(userToDelete.get().getId());
+        }
+
+        throw new UserNotFoundException();
+
+    }
+
+    public UserDocument updateById(String id, UserDocument userDocument) throws UserNotFoundException {
+
+        Optional<UserDocument> documentFound = iUserRepository.findById(id);
+
+        if (documentFound.isPresent()) {
             userDocument.setId(id);
             iUserRepository.save(userDocument);
-            result = true;
+
+            return iUserRepository.findById(id).get();
+
         }
-        return result;
+
+        throw new UserNotFoundException();
+
+    }
+
+    public UserDocument updateByEmail(String email,UserDocument userDocument) throws UserNotFoundException {
+
+        if (iUserRepository.findFirstByEmail(email).isPresent()) {
+            userDocument.setEmail(email);
+            iUserRepository.save(userDocument);
+
+            return iUserRepository.findFirstByEmail(email).get();
+        }
+
+        throw new UserNotFoundException();
     }
 
 }
