@@ -66,10 +66,9 @@ public class UserServiceMongoDb implements IUserService {
 
         if (documentFound.isPresent()) {
             iUserRepository.deleteById(id);
-
+        } else {
+            throw new UserNotFoundException();
         }
-
-        throw new UserNotFoundException();
 
     }
 
@@ -80,9 +79,9 @@ public class UserServiceMongoDb implements IUserService {
 
         if (userToDelete.isPresent()) {
             iUserRepository.deleteById(userToDelete.get().getId());
+        } else {
+            throw new UserNotFoundException();
         }
-
-        throw new UserNotFoundException();
 
     }
 
