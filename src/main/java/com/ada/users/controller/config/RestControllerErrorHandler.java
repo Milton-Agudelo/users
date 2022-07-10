@@ -1,7 +1,5 @@
 package com.ada.users.controller.config;
 
-import com.ada.users.exception.InternalServerErrorException;
-import com.ada.users.exception.ServerErrorResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -26,10 +24,4 @@ class RestControllerErrorHandler
         return new ResponseEntity<>( exception.getCause().getMessage(), HttpStatus.BAD_REQUEST );
     }
 
-    @ExceptionHandler( InternalServerErrorException.class )
-    private ResponseEntity<ServerErrorResponseDto> handleRuntimeException(InternalServerErrorException exception )
-
-    {
-        return new ResponseEntity<>( exception.getServerErrorResponseDto(), exception.getHttpStatus() );
-    }
 }

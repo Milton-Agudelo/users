@@ -1,6 +1,8 @@
 package com.ada.users.exception;
 
 import com.ada.users.error.ErrorCodeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 public class ServerErrorResponseDto {

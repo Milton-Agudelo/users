@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "23a0c087-49ea-4f6f-9972-db68afb6a77e",
+		"name": "Spring Learning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Autenticate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"ada10@gmail.com\",\r\n    \"password\":\"Password3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v1/auth/authenticate",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGExMEBnbWFpbC5jb20iLCJpYXQiOjE2NTczODc0NDcsImV4cCI6MTY1NzM5NDY0N30.wqUTzFswjZ4cyP8Ol6ayPtPo-7QLN-wy0A3v4wgrlHg",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Franciso\",\r\n    \"lastName\": \"Contreras\",\r\n    \"age\":28,\r\n    \"email\": \"ada12@gmail.com\",\r\n    \"password\":\"Password7\",\r\n    \"roles\": [\r\n        \"USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGExMEBnbWFpbC5jb20iLCJpYXQiOjE2NTczODY5NDgsImV4cCI6MTY1NzM5NDE0OH0.lsA52eAjvlEpT4vfDqnr5yevvD-ItZ5Pq9SzIDZxMBA",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/v3/users/",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGExMEBnbWFpbC5jb20iLCJpYXQiOjE2NTczODc0NDcsImV4cCI6MTY1NzM5NDY0N30.wqUTzFswjZ4cyP8Ol6ayPtPo-7QLN-wy0A3v4wgrlHg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/v3/users/findById/",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"findById",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query by email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGExMEBnbWFpbC5jb20iLCJpYXQiOjE2NTczODc0NDcsImV4cCI6MTY1NzM5NDY0N30.wqUTzFswjZ4cyP8Ol6ayPtPo-7QLN-wy0A3v4wgrlHg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/v3/users/findByEmail/",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"findByEmail",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juliana\",\r\n    \"lastName\": \"Aristizabal\",\r\n    \"email\": \"ada10@gmail.com\",\r\n    \"password\":\"Password3\",\r\n    \"age\":25,\r\n    \"roles\": [\r\n        \"ADMIN\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/updateById/d5b44074-25bc-4df6-99a6-36df65386aeb",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"updateById",
+								"d5b44074-25bc-4df6-99a6-36df65386aeb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update by email",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Juliana\",\r\n    \"lastName\": \"Aristizabal\",\r\n    \"email\": \"ada10@gmail.com\",\r\n    \"password\":\"Password3\",\r\n    \"age\":25,\r\n    \"roles\": [\r\n        \"ADMIN\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/updateByEmail/d5b44074-25bc-4df6-99a6-36df65386aeb",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"updateByEmail",
+								"d5b44074-25bc-4df6-99a6-36df65386aeb"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGExMEBnbWFpbC5jb20iLCJpYXQiOjE2NTczODc0NDcsImV4cCI6MTY1NzM5NDY0N30.wqUTzFswjZ4cyP8Ol6ayPtPo-7QLN-wy0A3v4wgrlHg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"date\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/deleteById/62c990cdb2060b450dd40652",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"deleteById",
+								"62c990cdb2060b450dd40652"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by email",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZGExMEBnbWFpbC5jb20iLCJpYXQiOjE2NTczODc0NDcsImV4cCI6MTY1NzM5NDY0N30.wqUTzFswjZ4cyP8Ol6ayPtPo-7QLN-wy0A3v4wgrlHg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"\",\r\n    \"date\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/v3/users/deleteByEmail/ada12@gmail.com",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"v3",
+								"users",
+								"deleteByEmail",
+								"ada12@gmail.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": "http://localhost:8080"
+		}
+	]
+}

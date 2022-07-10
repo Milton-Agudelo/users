@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 @Component
-public class JWTGenerate {
-    private  String KEY = "M1lt0n4gudel0";
+public class JwtGenerate {
+    private static final String KEY = "M1lt0n4gudel0";
     public String generateToken(UserDocument userDocument){
         return Jwts.builder().setSubject(userDocument.getEmail()).setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 *2))

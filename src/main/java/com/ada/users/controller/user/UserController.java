@@ -38,41 +38,36 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body((new UserDto(iUserService.save(new UserDocument(userDto)))));
     }
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("findById/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable String id) {
-        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
-        try {
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body((new UserDto(iUserService.findById(id))));
-     /*   } catch (Exception e) {
-            throw new Exception(e.getMessage()); // */
-        }  finally {
-            return responseEntity;
-        }
+        return ResponseEntity.status(HttpStatus.OK).body((new UserDto(iUserService.findById(id))));
     }
 
-    @GetMapping("/findByEmail/{email}")
+    @GetMapping("findByEmail/{email}")
     public ResponseEntity<UserDto> findByEmail(@PathVariable String email){
         return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.findByEmail(email)));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<UserDto> update(@PathVariable String id, @RequestBody UserDto userDto) {
-        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
-        UserDocument userDocument = new UserDocument(userDto);
-        if (iUserService.update(id, userDocument)) {
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.findById(id)));
-        }
-
-        return responseEntity;
+    @PutMapping("updateById/{id}")
+    public ResponseEntity<UserDto> updateById(@PathVariable String id, @RequestBody UserDto userDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.updateById(id, new UserDocument(userDto))));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("User with id: '" + id + "' can not be found!");
-        if (iUserService.deleteById(id)) {
-            responseEntity = ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        return responseEntity;
+    @PutMapping("updateByEmail/{email}")
+    public ResponseEntity<UserDto> updateByEmail(@PathVariable String email, @RequestBody UserDto userDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.updateByEmail(email, new UserDocument(userDto))));
+    }
+
+    @DeleteMapping("deleteById/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable String id) {
+        iUserService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("deleteByEmail/{email}")
+    public ResponseEntity<Void> deleteByEmail(@PathVariable String email) {
+        iUserService.deleteByEmail(email);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
