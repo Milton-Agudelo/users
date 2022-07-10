@@ -8,20 +8,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @RestControllerAdvice
-class RestControllerErrorHandler
-{
+class RestControllerErrorHandler {
 
-    @ExceptionHandler( HttpMessageNotReadableException.class )
-    private ResponseEntity<String> handleHTTPMessageNotReadable(HttpMessageNotReadableException exception )
-    {
-        return new ResponseEntity<>( exception.getCause().getMessage(), HttpStatus.BAD_REQUEST );
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    private ResponseEntity<String> handleHTTPMessageNotReadable(HttpMessageNotReadableException exception) {
+        return new ResponseEntity<>(exception.getCause().getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler( MissingServletRequestPartException.class )
-    private ResponseEntity<String> handleMissingServletRequestPart( MissingServletRequestPartException exception )
-
-    {
-        return new ResponseEntity<>( exception.getCause().getMessage(), HttpStatus.BAD_REQUEST );
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    private ResponseEntity<String> handleMissingServletRequestPart(MissingServletRequestPartException exception) {
+        return new ResponseEntity<>(exception.getCause().getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
