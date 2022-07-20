@@ -1,6 +1,6 @@
 package com.ada.users.controller.security;
 
-import com.ada.users.service.UserServiceMongoDb;
+import com.ada.users.service.UserServiceDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class JwtFilterRequest extends OncePerRequestFilter {
     private JwtGenerate jwtGenerate;
 
     @Autowired
-    private UserServiceMongoDb userServiceMongoDb;
+    private UserServiceDb userServiceDb;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class JwtFilterRequest extends OncePerRequestFilter {
             String jwt = autorizationHeader.substring(7);
             String email = jwtGenerate.getEmail(jwt);
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                if (jwtGenerate.validateToken(jwt, userServiceMongoDb.findByEmail(email))) {
+                if (jwtGenerate.validateToken(jwt, userServiceDb.findByEmail(email))) {
                     SecurityContextHolder.getContext().setAuthentication(new TokenAuthentication(jwt, email, null));
                     request.setAttribute("claims", jwtGenerate.getClaim(jwt));
                     request.setAttribute("subject", jwtGenerate.getClaim(jwt).getSubject());

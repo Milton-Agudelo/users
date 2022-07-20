@@ -2,22 +2,27 @@ package com.ada.users.controller.user;
 
 import com.ada.users.entity.RoleEnum;
 import com.ada.users.entity.UserDocument;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import javax.validation.constraints.Email;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class UserDto {
 
     private String id;
     private String name;
+    @JsonProperty("lastName")
     private String lastName;
-    private int age;
+    private Integer age;
+    @Email
     private String email;
-    private String passwordHash;
+    @JsonProperty("passwordHash")
+    private String password;
     private List<RoleEnum> roles;
     private Date date;
 

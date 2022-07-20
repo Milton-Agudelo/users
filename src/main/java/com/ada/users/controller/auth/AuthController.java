@@ -3,7 +3,7 @@ package com.ada.users.controller.auth;
 import com.ada.users.controller.security.JwtGenerate;
 import com.ada.users.entity.UserDocument;
 import com.ada.users.exception.InvalidCredentialsException;
-import com.ada.users.service.UserServiceMongoDb;
+import com.ada.users.service.UserServiceDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +19,15 @@ public class AuthController {
     @Autowired
     private JwtGenerate jwtGenerate;
     @Autowired
-    UserServiceMongoDb userServiceMongoDb;
+    UserServiceDb userServiceDb;
 
-    public AuthController(@Autowired UserServiceMongoDb userServiceMongoDb, @Autowired JwtGenerate jwtGenerate) {
-        this.userServiceMongoDb = userServiceMongoDb;
+    public AuthController(@Autowired UserServiceDb userServiceDb, @Autowired JwtGenerate jwtGenerate) {
+        this.userServiceDb = userServiceDb;
         this.jwtGenerate = jwtGenerate;
     }
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody  AuthenticationRequest request){
-        UserDocument userDocument = userServiceMongoDb.findByEmail(request.getEmail());
+        UserDocument userDocument = userServiceDb.findByEmail(request.getEmail());
         String jwt = "";
         if(BCrypt.checkpw(request.getPassword(), userDocument.getPasswordHash())){
             jwt = jwtGenerate.generateToken(userDocument);
@@ -36,6 +36,5 @@ public class AuthController {
             throw new InvalidCredentialsException();
         }
     }
-
 
 }
