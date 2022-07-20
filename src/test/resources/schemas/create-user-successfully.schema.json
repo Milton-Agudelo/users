@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer"
+    },
+    "email": {
+      "type": "string"
+    },
+    "passwordHash": {
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string",
+          "enum": [
+            "ADMIN",
+            "USER"
+          ]
+        }
+      ]
+    },
+    "date": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "lastName",
+    "age",
+    "email",
+    "passwordHash",
+    "roles",
+    "date"
+  ]
+}

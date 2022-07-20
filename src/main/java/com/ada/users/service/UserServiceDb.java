@@ -11,16 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceMongoDb implements IUserService {
+public class UserServiceDb implements IUserService {
 
     private final IUserRepository iUserRepository;
 
-    public UserServiceMongoDb(@Autowired IUserRepository iUserRepository) {
+    public UserServiceDb(@Autowired IUserRepository iUserRepository) {
         this.iUserRepository = iUserRepository;
     }
 
     @Override
     public UserDocument save(UserDocument userDocument) throws RegisteredEmailException{
+
         if (!iUserRepository.findFirstByEmail(userDocument.getEmail()).isPresent()) {
             return iUserRepository.save(userDocument);
         }
@@ -87,9 +88,7 @@ public class UserServiceMongoDb implements IUserService {
 
     public UserDocument updateById(String id, UserDocument userDocument) throws UserNotFoundException {
 
-        Optional<UserDocument> documentFound = iUserRepository.findById(id);
-
-        if (documentFound.isPresent()) {
+        if (iUserRepository.findById(id).isPresent()) {
             userDocument.setId(id);
             iUserRepository.save(userDocument);
 

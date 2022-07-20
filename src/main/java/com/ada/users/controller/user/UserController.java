@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 @RestController
 @RequestMapping("/v3/users/")
@@ -34,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping
-    private ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
         return ResponseEntity.status(HttpStatus.OK).body((new UserDto(iUserService.save(new UserDocument(userDto)))));
     }
 
@@ -50,12 +48,17 @@ public class UserController {
 
     @PutMapping("updateById/{id}")
     public ResponseEntity<UserDto> updateById(@PathVariable String id, @RequestBody UserDto userDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.updateById(id, new UserDocument(userDto))));
+        userDto.setId(id);
+        UserDocument userDocument = new UserDocument(id, userDto.getName(), userDto.getLastName(),
+                userDto.getAge(), userDto.getEmail(), userDto.getPassword(), userDto.getRoles(), userDto.getDate());
+        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.updateById(id, userDocument)));
     }
 
     @PutMapping("updateByEmail/{email}")
     public ResponseEntity<UserDto> updateByEmail(@PathVariable String email, @RequestBody UserDto userDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.updateByEmail(email, new UserDocument(userDto))));
+        UserDocument userDocument = new UserDocument(userDto.getId(), userDto.getName(), userDto.getLastName(),
+                userDto.getAge(), email, userDto.getPassword(), userDto.getRoles(), userDto.getDate());
+        return ResponseEntity.status(HttpStatus.OK).body(new UserDto(iUserService.updateByEmail(email, userDocument)));
     }
 
     @DeleteMapping("deleteById/{id}")
@@ -68,6 +71,11 @@ public class UserController {
     public ResponseEntity<Void> deleteByEmail(@PathVariable String email) {
         iUserService.deleteByEmail(email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> NullPointerException() {
+        return ResponseEntity.status(HttpStatus.IM_USED).body("Invalid data request");
     }
 
 }
