@@ -8,14 +8,12 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
     @Bean
     public Docket newsApi() {
@@ -31,7 +29,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Bookings API",
+                "Users API",
                 "Some custom description of API.",
                 "1.0",
                 "Terms of service",

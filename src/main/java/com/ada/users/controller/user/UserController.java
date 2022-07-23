@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 @RestController
 @RequestMapping("/v3/users/")
@@ -23,11 +25,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
-        List userDtoList = new ArrayList();
-        ListIterator listIterator = iUserService.findAll().listIterator();
-        while (listIterator.hasNext()) {
-            userDtoList.add(new UserDto((UserDocument) listIterator.next()));
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        for (UserDocument userDoc : iUserService.findAll()) {
+            userDtoList.add(new UserDto(userDoc));
         }
+        
         return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
     }
 
