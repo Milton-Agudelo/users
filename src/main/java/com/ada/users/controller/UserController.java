@@ -1,4 +1,4 @@
-package com.ada.users.controller.user;
+package com.ada.users.controller;
 
 import com.ada.users.entity.UserDocument;
 import com.ada.users.service.IUserService;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 @RestController
 @RequestMapping("/v3/users/")

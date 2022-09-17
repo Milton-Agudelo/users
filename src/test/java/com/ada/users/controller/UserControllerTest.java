@@ -1,8 +1,9 @@
-package com.ada.users.controller.user;
+package com.ada.users.controller;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.ada.users.entity.RoleEnum;
+import com.ada.users.exception.RegisteredEmailException;
 import com.ada.users.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class UserControllerTest {
 
-    private String jwt = "Bearer ";
-
-    // class variable
     final String randString = "abcdefghijklmnopqrstuvwxyz12345674890";
 
     Random rand = new Random();
@@ -48,27 +46,6 @@ class UserControllerTest {
         String email = name + "_" + lastName + "@gmail.com";
         return new UserDto(null, name, lastName, age, email, password, roles, new Date());
     }
-/*
-    //@BeforeAll
-    @Test
-    //@WithMockUser(username = "ada10@gmail.com", password = "Password3", roles = "USER")
-    public void testAuth() throws Exception {
-        // Arrange
-        String authenticateUri = "/v1/auth/authenticate";
-        String authenticateUserSchema = "authenticate-user-successfully.schema.json";
-        RequestBuilder request = MockMvcRequestBuilders.post(authenticateUri);
-
-        File schemaFile = new File(classLoader.getResource("schemas/" + authenticateUserSchema).getFile());
-
-        //Act
-
-        //Response response = (Response) mockMvc.perform(request).andReturn().getResponse();
-
-        //Assert
-        //response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(schemaFile))
-          //      .statusCode(HttpStatus.OK.value());
-
-    }// */
 
 // ---------------------------------------------------------
 // Create User Tests
@@ -91,6 +68,19 @@ class UserControllerTest {
     }
 
     @Test
+    void testCreateUserRegisteredEmailException() {
+        // Arrange
+        UserDto userDto = getRandomUserDto();
+        userDto.setEmail("ada29@gmail.com");
+
+        // Act & assert
+        assertThrows(RegisteredEmailException.class,
+                ()->{
+                    userController.save(userDto);
+                });
+    }
+
+    @Test
     void testCreateUserWithoutEmailFailed() {
         // Arrange
         UserDto userDto = getRandomUserDto();
@@ -99,13 +89,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "email is marked non-null but is null";
 
         // Act & Assert
-        IllegalArgumentException actualException = assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 ()->{
                     userController.save(userDto);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getMessage(), "IllegalArgument exception message");
+        assertEquals(expectedExceptionMessage, exception.getMessage(), "Illegal argument exception message");
     }
 
     @Test
@@ -117,13 +107,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "age is marked non-null but is null";
 
         // Act & Assert
-        IllegalArgumentException actualException = assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 ()->{
                     userController.save(userDto);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getMessage(), "Illegal argument exception message");
+        assertEquals(expectedExceptionMessage, exception.getMessage(), "Illegal argument exception message");
     }
 
     @Test
@@ -135,13 +125,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "passwordHash is marked non-null but is null";
 
         // Act & Assert
-        IllegalArgumentException actualException = assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
             ()->{
                 userController.save(userDto);
             });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getMessage(), "Illegal argument exception message");
+        assertEquals(expectedExceptionMessage, exception.getMessage(), "Illegal argument exception message");
     }
 
     @Test
@@ -152,13 +142,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "name is marked non-null but is null";
 
         // Act & Assert
-        IllegalArgumentException actualException = assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
             ()->{
                 userController.save(userDto);
             });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getMessage(), "IllegalArgument exception message");
+        assertEquals(expectedExceptionMessage, exception.getMessage(), "Illegal argument exception message");
     }
 
 // ---------------------------------------------------------
@@ -245,13 +235,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "User not found";
 
         // Act & Assert
-        UserNotFoundException actualException = assertThrows(UserNotFoundException.class,
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
                 ()->{
                     userController.findById(id);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getServerErrorResponseDto().getMessage(), "UserNotFound exception message");
+        assertEquals(expectedExceptionMessage, exception.getServerErrorResponseDto().getMessage(), "UserNotFound exception message");
     }
 
 // ---------------------------------------------------------
@@ -290,13 +280,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "User not found";
 
         // Act & Assert
-        UserNotFoundException actualException = assertThrows(UserNotFoundException.class,
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
                 ()->{
                     ResponseEntity<UserDto> obtainedUser = userController.findByEmail(email);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getServerErrorResponseDto().getMessage(), "UserNotFound exception message");
+        assertEquals(expectedExceptionMessage, exception.getServerErrorResponseDto().getMessage(), "UserNotFound exception message");
     }
 
 // ---------------------------------------------------------
@@ -341,13 +331,13 @@ class UserControllerTest {
         userToUpdate.setId(id);
 
         // Act & Assert
-        UserNotFoundException actualException = assertThrows(UserNotFoundException.class,
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
                 ()->{
                     userController.updateById(id, userToUpdate);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getServerErrorResponseDto().getMessage(),
+        assertEquals(expectedExceptionMessage, exception.getServerErrorResponseDto().getMessage(),
                 "UserNotFound exception message");
     }
 
@@ -392,13 +382,13 @@ class UserControllerTest {
         userToUpdate.setId(id);
 
         // Act & Assert
-        UserNotFoundException actualException = assertThrows(UserNotFoundException.class,
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
                 ()->{
                     userController.updateById(id, userToUpdate);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getServerErrorResponseDto().getMessage(),
+        assertEquals(expectedExceptionMessage, exception.getServerErrorResponseDto().getMessage(),
                 "UserNotFound exception message");
     }
 
@@ -430,13 +420,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "User not found";
 
         // Act & Assert
-        UserNotFoundException actualException = assertThrows(UserNotFoundException.class,
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
                 ()->{
                     userController.deleteById(id);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getServerErrorResponseDto().getMessage(),
+        assertEquals(expectedExceptionMessage, exception.getServerErrorResponseDto().getMessage(),
                 "UserNotFound exception message");
     }
 
@@ -470,13 +460,13 @@ class UserControllerTest {
         String expectedExceptionMessage = "User not found";
 
         // Act & Assert
-        UserNotFoundException actualException = assertThrows(UserNotFoundException.class,
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class,
                 ()->{
                     userController.deleteByEmail(email);
                 });
 
         // Assert
-        assertEquals(expectedExceptionMessage, actualException.getServerErrorResponseDto().getMessage(),
+        assertEquals(expectedExceptionMessage, exception.getServerErrorResponseDto().getMessage(),
                 "UserNotFound exception message");
     }
 }

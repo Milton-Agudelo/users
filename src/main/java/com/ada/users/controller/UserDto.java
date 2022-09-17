@@ -1,4 +1,4 @@
-package com.ada.users.controller.user;
+package com.ada.users.controller;
 
 import com.ada.users.entity.RoleEnum;
 import com.ada.users.entity.UserDocument;
