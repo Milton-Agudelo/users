@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.ada.users.controller.user.UserDto;
+import com.ada.users.controller.UserDto;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Date;
