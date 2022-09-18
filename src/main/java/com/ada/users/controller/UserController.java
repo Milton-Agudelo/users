@@ -2,10 +2,13 @@ package com.ada.users.controller;
 
 import com.ada.users.entity.UserDocument;
 import com.ada.users.service.IUserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +25,15 @@ public class UserController {
         this.iUserService = iUserService;
     }
 
+    @ApiIgnore
     @GetMapping
+    public ModelAndView testResult() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
+
+    @GetMapping("findAll/")
     public ResponseEntity<List<UserDto>> findAll() {
         List<UserDto> userDtoList = new ArrayList<>();
 
@@ -33,7 +44,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
     }
 
-    @PostMapping
+    @PostMapping("save/")
     public ResponseEntity<UserDto> save(@RequestBody UserDto userDto) {
         return ResponseEntity.status(HttpStatus.OK).body((new UserDto(iUserService.save(new UserDocument(userDto)))));
     }
