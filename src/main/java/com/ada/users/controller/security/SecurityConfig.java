@@ -22,6 +22,8 @@ public class SecurityConfig {
             .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/v2/api-docs").permitAll()
             .antMatchers("/**/authenticate").permitAll()
+            .antMatchers("/*").permitAll()
+            .antMatchers("/jacoco-resources/*").permitAll()
             .anyRequest().authenticated()
             .and().sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

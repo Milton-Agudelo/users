@@ -30,8 +30,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "Users API",
-                "Some custom description of API.",
-                "1.0",
+                "Spring boot basic course",
+                "3.0",
                 "Terms of service",
                 new Contact("Milton Agudelo", "www.ada.org", "Ing.Milton.Agudelo@gmail.com"),
                 "License of API",
